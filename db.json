@@ -1,0 +1,12 @@
+{
+  "tasks": [
+    {
+      "id": "1",
+      "title": "Task 1",
+      "description": "Check task",
+      "status": "todo",
+      "priority": "low",
+      "createdAt": "2026-03-03T10:00:00.000Z"
+    }
+  ]
+}
