@@ -6,10 +6,9 @@ import { queryKeys } from "@/lib/query-keys";
 import { Task } from "@/types/task";
 import { createTask, updateTask, deleteTask } from "@/lib/api";
 
-export function useTaskMutations() {
+export const useTaskMutations = () => {
   const queryClient = useQueryClient();
 
-  //Create
   const create = useMutation({
     mutationFn: (data: Omit<Task, "id" | "createdAt">) => createTask(data),
     onSuccess: () => {
@@ -21,7 +20,6 @@ export function useTaskMutations() {
     },
   });
 
-  //Update
   const update = useMutation({
     mutationFn: ({ id, data }: { id: string; data: Partial<Task> }) =>
       updateTask({ id, data }),
@@ -34,7 +32,6 @@ export function useTaskMutations() {
     },
   });
 
-  //Delete
   const remove = useMutation({
     mutationFn: (id: string) => deleteTask(id),
     onSuccess: () => {
@@ -47,4 +44,4 @@ export function useTaskMutations() {
   });
 
   return { create, update, remove };
-}
+};
