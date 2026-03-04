@@ -67,6 +67,7 @@ const HomePage = () => {
           {tasks?.map((task) => {
             const { id, title, description, status, priority, createdAt } =
               task;
+
             return (
               <tr
                 key={id}
@@ -78,12 +79,10 @@ const HomePage = () => {
                     onCheckedChange={() => handleToggleDone(task)}
                   />
                 </td>
-
-                <td className="p-2">
-                  <div className="font-medium">{title}</div>
-
+                <td className="p-2 flex flex-col">
+                  <span className="font-medium">{title}</span>
                   {description && (
-                    <div className="text-sm text-gray-500">{description}</div>
+                    <span className="text-sm text-gray-500">{description}</span>
                   )}
                 </td>
                 <td className="p-2">{status}</td>

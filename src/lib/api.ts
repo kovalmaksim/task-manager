@@ -1,7 +1,8 @@
 import { Task } from "@/types/task";
 const BASE_URL = "http://localhost:3001/tasks";
 
-export async function fetchTasks(): Promise<Task[]> {
+//TODO
+export const fetchTasks = async (): Promise<Task[]> => {
   const res = await fetch(BASE_URL);
 
   if (!res.ok) {
@@ -9,9 +10,9 @@ export async function fetchTasks(): Promise<Task[]> {
   }
 
   return res.json();
-}
+};
 
-export async function createTask(task: Omit<Task, "id" | "createdAt">) {
+export const createTask = async (task: Omit<Task, "id" | "createdAt">) => {
   const res = await fetch(BASE_URL, {
     method: "POST",
     headers: {
@@ -28,15 +29,15 @@ export async function createTask(task: Omit<Task, "id" | "createdAt">) {
   }
 
   return res.json();
-}
+};
 
-export async function updateTask({
+export const updateTask = async ({
   id,
   data,
 }: {
   id: string;
   data: Partial<Task>;
-}) {
+}) => {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "PATCH",
     headers: {
@@ -50,9 +51,9 @@ export async function updateTask({
   }
 
   return res.json();
-}
+};
 
-export async function deleteTask(id: string) {
+export const deleteTask = async (id: string) => {
   const res = await fetch(`${BASE_URL}/${id}`, {
     method: "DELETE",
   });
@@ -62,4 +63,4 @@ export async function deleteTask(id: string) {
   }
 
   return true;
-}
+};

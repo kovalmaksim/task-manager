@@ -34,7 +34,7 @@ interface TaskFormProps {
 export const TaskForm = ({ task, onSuccess }: TaskFormProps) => {
   const { create, update } = useTaskMutations();
 
-  const form = useForm<TaskFormData>({
+  const { control, handleSubmit, register, formState } = useForm<TaskFormData>({
     resolver: zodResolver(taskSchema),
     defaultValues: {
       title: task?.title ?? "",
@@ -47,31 +47,33 @@ export const TaskForm = ({ task, onSuccess }: TaskFormProps) => {
   const onSubmit = (data: TaskFormData) => {
     if (task) {
       update.mutate({ id: task.id, data }, { onSuccess });
-    } else {
-      create.mutate(data, { onSuccess });
+
+      return;
     }
+
+    create.mutate(data, { onSuccess });
   };
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 mt-4">
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 mt-4">
       <div>
-        <Input placeholder="Заголовок" {...form.register("title")} />
+        <Input placeholder="Заголовок" {...register("title")} />
 
-        {form.formState.errors.title && (
+        {formState.errors.title && (
           <p className="text-sm text-red-500 mt-1">
-            {form.formState.errors.title.message}
+            {formState.errors.title.message}
           </p>
         )}
       </div>
 
-      <Textarea placeholder="Описание" {...form.register("description")} />
+      <Textarea placeholder="Описание" {...register("description")} />
 
       <div className="flex gap-3">
         <Controller
-          control={form.control}
+          control={control}
           name="priority"
-          render={({ field }) => (
-            <Select value={field.value} onValueChange={field.onChange}>
+          render={({ field: { onChange, value } }) => (
+            <Select value={value} onValueChange={onChange}>
               <SelectTrigger>
                 <SelectValue placeholder="Приоритет" />
               </SelectTrigger>
@@ -85,17 +87,16 @@ export const TaskForm = ({ task, onSuccess }: TaskFormProps) => {
           )}
         />
         <Controller
-          control={form.control}
+          control={control}
           name="status"
-          render={({ field }) => (
-            <Select value={field.value} onValueChange={field.onChange}>
+          render={({ field: { onChange, value } }) => (
+            <Select value={value} onValueChange={onChange}>
               <SelectTrigger>
                 <SelectValue placeholder="Статус" />
               </SelectTrigger>
 
               <SelectContent>
                 <SelectItem value="todo">Todo</SelectItem>
-
                 <SelectItem value="in-progress">In-progress</SelectItem>
                 <SelectItem value="done">Done</SelectItem>
               </SelectContent>
