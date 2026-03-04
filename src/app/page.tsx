@@ -3,13 +3,13 @@
 import { useTasks } from "@/hooks/useTasks";
 import { useTaskMutations } from "@/hooks/useTasksMutations";
 import { Task } from "@/types/task";
-import { Checkbox } from "@/components/ui/checkbox";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
 import { TaskDialog } from "@/components/task/TaskDialog";
+import { TaskTable } from "@/components/task/TaskTable";
 
 const HomePage = () => {
-  const { data: tasks, isLoading, isError } = useTasks();
+  const { data: tasks = [], isLoading, isError } = useTasks();
   const { update, remove } = useTaskMutations();
 
   const [dialogOpen, setDialogOpen] = useState(false);
@@ -52,65 +52,12 @@ const HomePage = () => {
           Добавить задачу
         </Button>
       </div>
-      <table className="w-full border border-gray-200 rounded-lg overflow-hidden">
-        <thead className="bg-gray-100">
-          <tr>
-            <th className="p-2">Выполнено</th>
-            <th className="p-2 text-left">Заголовок</th>
-            <th className="p-2">Статус</th>
-            <th className="p-2">Приоритет</th>
-            <th className="p-2">Дата</th>
-            <th className="p-2">Действия</th>
-          </tr>
-        </thead>
-        <tbody>
-          {tasks?.map((task) => {
-            const { id, title, description, status, priority, createdAt } =
-              task;
-
-            return (
-              <tr
-                key={id}
-                className="border-t border-gray-200 hover:bg-gray-50"
-              >
-                <td className="p-2 text-center">
-                  <Checkbox
-                    checked={status === "done"}
-                    onCheckedChange={() => handleToggleDone(task)}
-                  />
-                </td>
-                <td className="p-2 flex flex-col">
-                  <span className="font-medium">{title}</span>
-                  {description && (
-                    <span className="text-sm text-gray-500">{description}</span>
-                  )}
-                </td>
-                <td className="p-2">{status}</td>
-                <td className="p-2">{priority}</td>
-                <td className="p-2 text-sm text-gray-500">
-                  {new Date(createdAt).toLocaleString()}
-                </td>
-                <td className="p-2 flex gap-2">
-                  <Button
-                    size="sm"
-                    variant="outline"
-                    onClick={() => handleEdit(task)}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    size="sm"
-                    variant="destructive"
-                    onClick={() => handleDelete(id)}
-                  >
-                    Delete
-                  </Button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <TaskTable
+        tasks={tasks}
+        onEdit={handleEdit}
+        onDelete={handleDelete}
+        onToggleDone={handleToggleDone}
+      />
       <TaskDialog
         task={editTask}
         open={dialogOpen}
