@@ -2,19 +2,11 @@
   "tasks": [
     {
       "id": "1",
-      "title": "Task 2",
+      "title": "Task 1",
       "description": "Check task",
-      "status": "done",
+      "status": "todo",
       "priority": "low",
       "createdAt": "2026-03-03T10:00:00.000Z"
-    },
-    {
-      "title": "Посмотреть футбол",
-      "description": "Матч Барселоны и Атлетико",
-      "priority": "high",
-      "status": "todo",
-      "createdAt": "2026-03-03T14:13:32.848Z",
-      "id": "Io-z-VL"
     }
   ]
 }

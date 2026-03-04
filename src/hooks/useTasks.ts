@@ -5,11 +5,11 @@ import { fetchTasks } from "@/lib/api";
 import { Task } from "@/types/task";
 import { queryKeys } from "@/lib/query-keys";
 
-export function useTasks() {
+export const useTasks = () => {
   return useQuery<Task[]>({
     queryKey: queryKeys.tasks,
     queryFn: fetchTasks,
     staleTime: 1000 * 60,
     refetchOnWindowFocus: false,
   });
-}
+};
