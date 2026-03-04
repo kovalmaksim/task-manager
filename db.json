@@ -7,6 +7,14 @@
       "status": "todo",
       "priority": "low",
       "createdAt": "2026-03-03T10:00:00.000Z"
+    },
+    {
+      "title": "Task 2",
+      "description": "To do filters and search tasks",
+      "priority": "high",
+      "status": "in-progress",
+      "createdAt": "2026-03-04T12:55:56.624Z",
+      "id": "h5nMbNp"
     }
   ]
 }
