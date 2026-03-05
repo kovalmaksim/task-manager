@@ -21,7 +21,7 @@ const taskSchema = z.object({
   title: z.string().min(3, "Минимум 3 символа"),
   description: z.string().optional(),
   priority: z.enum(["low", "medium", "high"]),
-  status: z.enum(["todo", "in-progress", "done"]),
+  status: z.enum(["todo", "in_progress", "done"]),
 });
 
 export type TaskFormData = z.infer<typeof taskSchema>;
@@ -66,7 +66,11 @@ export const TaskForm = ({ task, onSuccess }: TaskFormProps) => {
         )}
       </div>
 
-      <Textarea placeholder="Описание" {...register("description")} />
+      <Textarea
+        placeholder="Описание"
+        {...register("description")}
+        className="w-full break-all overflow-auto"
+      />
 
       <div className="flex gap-3">
         <Controller
@@ -97,7 +101,7 @@ export const TaskForm = ({ task, onSuccess }: TaskFormProps) => {
 
               <SelectContent>
                 <SelectItem value="todo">Todo</SelectItem>
-                <SelectItem value="in-progress">In-progress</SelectItem>
+                <SelectItem value="in_progress">In-progress</SelectItem>
                 <SelectItem value="done">Done</SelectItem>
               </SelectContent>
             </Select>

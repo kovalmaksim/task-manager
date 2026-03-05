@@ -17,7 +17,7 @@ export const TaskDialog: FC<TaskDialogProps> = ({
   onOpenChange,
 }) => (
   <Dialog open={open} onOpenChange={onOpenChange}>
-    <DialogContent className="sm:max-w-106">
+    <DialogContent className="w-full max-w-md sm:max-w-lg">
       <DialogHeader>
         <DialogTitle>
           {task ? "Редактировать задачу" : "Создать задачу"}

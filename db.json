@@ -3,18 +3,26 @@
     {
       "id": "1",
       "title": "Task 1",
-      "description": "Check task",
-      "status": "todo",
+      "description": "Check task ffffff",
+      "status": "done",
       "priority": "low",
       "createdAt": "2026-03-03T10:00:00.000Z"
     },
     {
       "title": "Task 2",
-      "description": "To do filters and search tasks",
-      "priority": "high",
-      "status": "in-progress",
+      "description": "\n",
+      "priority": "medium",
+      "status": "in_progress",
       "createdAt": "2026-03-04T12:55:56.624Z",
       "id": "h5nMbNp"
+    },
+    {
+      "title": "визуал",
+      "description": "добавить адаптив",
+      "priority": "high",
+      "status": "in_progress",
+      "createdAt": "2026-03-05T09:12:52.739Z",
+      "id": "uDAumKg"
     }
   ]
 }
