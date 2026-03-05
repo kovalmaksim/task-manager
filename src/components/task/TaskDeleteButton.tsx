@@ -1,0 +1,54 @@
+"use client";
+
+import { FC, useState } from "react";
+import { Button } from "../ui/button";
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+  AlertDialogTrigger,
+} from "../ui/alert-dialog";
+import { useTaskMutations } from "@/hooks/useTasksMutations";
+
+interface TaskDeleteButtonProps {
+  taskId: string;
+}
+
+export const TaskDeleteButton: FC<TaskDeleteButtonProps> = ({ taskId }) => {
+  const { remove } = useTaskMutations();
+  const [open, setOpen] = useState(false);
+
+  const handleDelete = () => {
+    remove.mutate(taskId);
+    setOpen(false);
+  };
+
+  return (
+    <AlertDialog open={open} onOpenChange={setOpen}>
+      <AlertDialogTrigger asChild>
+        <Button variant="destructive" size="sm">
+          Delete
+        </Button>
+      </AlertDialogTrigger>
+
+      <AlertDialogContent>
+        <AlertDialogHeader>
+          <AlertDialogTitle>Удалить задачу?</AlertDialogTitle>
+          <AlertDialogDescription>
+            Это действие нельзя отменить
+          </AlertDialogDescription>
+        </AlertDialogHeader>
+
+        <AlertDialogFooter>
+          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogAction onClick={handleDelete}>Delete</AlertDialogAction>
+        </AlertDialogFooter>
+      </AlertDialogContent>
+    </AlertDialog>
+  );
+};

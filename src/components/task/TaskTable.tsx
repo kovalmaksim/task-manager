@@ -15,6 +15,7 @@ import {
 import { formatDate } from "@/lib/formatDate";
 import { StatusBadge } from "./badges/StatusBadge";
 import { PriorityBadge } from "./badges/PriorityBadge";
+import { TaskDeleteButton } from "./TaskDeleteButton";
 
 interface TaskTableProps {
   tasks: Task[];
@@ -35,7 +36,6 @@ const headers = [
 export const TaskTable: FC<TaskTableProps> = ({
   tasks,
   onEdit,
-  onDelete,
   onToggleDone,
 }) => (
   <Table className="border border-gray-200 rounded-lg overflow-hidden shadow-sm">
@@ -89,14 +89,7 @@ export const TaskTable: FC<TaskTableProps> = ({
                 >
                   Edit
                 </Button>
-
-                <Button
-                  size="sm"
-                  variant="destructive"
-                  onClick={() => onDelete(task.id)}
-                >
-                  Delete
-                </Button>
+                <TaskDeleteButton taskId={task.id} />
               </div>
             </TableCell>
           </TableRow>
