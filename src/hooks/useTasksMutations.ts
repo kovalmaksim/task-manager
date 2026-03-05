@@ -11,35 +11,88 @@ export const useTaskMutations = () => {
 
   const create = useMutation({
     mutationFn: (data: Omit<Task, "id" | "createdAt">) => createTask(data),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.tasks });
-      toast.success("Задача создана");
+
+    onMutate: (data) => {
+      const previousTasks = queryClient.getQueryData<Task[]>(queryKeys.tasks);
+
+      const optimisticTask: Task = {
+        id: crypto.randomUUID(),
+        createdAt: new Date().toISOString(),
+        ...data,
+      };
+
+      queryClient.setQueryData<Task[]>(queryKeys.tasks, (old) => [
+        ...(old ?? []),
+        optimisticTask,
+      ]);
+
+      return { previousTasks };
     },
-    onError: () => {
+
+    onError: (_err, _variables, context) => {
+      if (context?.previousTasks) {
+        queryClient.setQueryData(queryKeys.tasks, context.previousTasks);
+      }
       toast.error("Ошибка при создании задачи");
+    },
+
+    onSuccess: () => {
+      toast.success("Задача создана");
     },
   });
 
   const update = useMutation({
     mutationFn: ({ id, data }: { id: string; data: Partial<Task> }) =>
       updateTask({ id, data }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.tasks });
-      toast.success("Задача обновлена");
+
+    onMutate: ({ id, data }) => {
+      const previousTasks = queryClient.getQueryData<Task[]>(queryKeys.tasks);
+
+      queryClient.setQueryData<Task[]>(
+        queryKeys.tasks,
+        (old) =>
+          old?.map((task) => (task.id === id ? { ...task, ...data } : task)) ??
+          [],
+      );
+
+      return { previousTasks };
     },
-    onError: () => {
+
+    onError: (_err, _variables, context) => {
+      if (context?.previousTasks) {
+        queryClient.setQueryData(queryKeys.tasks, context.previousTasks);
+      }
       toast.error("Ошибка при обновлении задачи");
+    },
+
+    onSuccess: () => {
+      toast.success("Задача обновлена");
     },
   });
 
   const remove = useMutation({
     mutationFn: (id: string) => deleteTask(id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: queryKeys.tasks });
-      toast.success("Задача удалена");
+
+    onMutate: (id) => {
+      const previousTasks = queryClient.getQueryData<Task[]>(queryKeys.tasks);
+
+      queryClient.setQueryData<Task[]>(
+        queryKeys.tasks,
+        (old) => old?.filter((task) => task.id !== id) ?? [],
+      );
+
+      return { previousTasks };
     },
-    onError: () => {
+
+    onError: (_err, _variables, context) => {
+      if (context?.previousTasks) {
+        queryClient.setQueryData(queryKeys.tasks, context.previousTasks);
+      }
       toast.error("Ошибка при удалении задачи");
+    },
+
+    onSuccess: () => {
+      toast.success("Задача удалена");
     },
   });
 

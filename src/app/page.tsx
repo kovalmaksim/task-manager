@@ -9,6 +9,7 @@ import { TaskDialog } from "@/components/task/TaskDialog";
 import { TaskTable } from "@/components/task/TaskTable";
 import { TaskFilters } from "@/components/task/TaskFilters";
 import { useTaskFilters } from "@/components/TaskProvider";
+import { TaskTableSkeleton } from "@/components/task/TaskTableSkeleton";
 
 const HomePage = () => {
   const { data: tasks = [], isLoading, isError } = useTasks();
@@ -36,7 +37,7 @@ const HomePage = () => {
     });
   }, [tasks, search, statusFilter, priorityFilter]);
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isLoading) return <TaskTableSkeleton rows={5} />;
   if (isError) return <div>Ошибка загрузки задач</div>;
 
   const handleToggleDone = ({ id, status: taskStatus }: Task) => {
