@@ -13,6 +13,8 @@ import {
   TableRow,
 } from "../ui/table";
 import { formatDate } from "@/lib/formatDate";
+import { StatusBadge } from "./badges/StatusBadge";
+import { PriorityBadge } from "./badges/PriorityBadge";
 
 interface TaskTableProps {
   tasks: Task[];
@@ -64,27 +66,38 @@ export const TaskTable: FC<TaskTableProps> = ({
             <TableCell className="p-2 flex flex-col max-w-75 ">
               <span className="font-medium truncate">{title}</span>
               {description && (
-                <span className="text-sm text-gray-5001 text-wrap max-w-30">
+                <span className="text-sm text-gray-500 wrap-break-word whitespace-pre-wrap">
                   {description}
                 </span>
               )}
             </TableCell>
-            <TableCell className="p-2">{status}</TableCell>
-            <TableCell className="p-2">{priority}</TableCell>
+            <TableCell className="p-2">
+              <StatusBadge status={status}></StatusBadge>
+            </TableCell>
+            <TableCell className="p-2">
+              <PriorityBadge priority={priority}></PriorityBadge>
+            </TableCell>
             <TableCell className="p-2 text-sm text-gray-500">
               {formatDate(new Date(createdAt))}
             </TableCell>
-            <TableCell className="p-2 flex gap-2">
-              <Button size="sm" variant="outline" onClick={() => onEdit(task)}>
-                Edit
-              </Button>
-              <Button
-                size="sm"
-                variant="destructive"
-                onClick={() => onDelete(id)}
-              >
-                Delete
-              </Button>
+            <TableCell className="p-2 align-middle">
+              <div className="flex items-center justify-center gap-2">
+                <Button
+                  size="sm"
+                  variant="outline"
+                  onClick={() => onEdit(task)}
+                >
+                  Edit
+                </Button>
+
+                <Button
+                  size="sm"
+                  variant="destructive"
+                  onClick={() => onDelete(task.id)}
+                >
+                  Delete
+                </Button>
+              </div>
             </TableCell>
           </TableRow>
         );
