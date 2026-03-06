@@ -18,38 +18,35 @@ import { PriorityBadge } from "./badges/PriorityBadge";
 import { TaskDeleteButton } from "./TaskDeleteButton";
 import { Pencil } from "lucide-react";
 import { ScrollArea, ScrollBar } from "../ui/scroll-area";
+import { headers, SortField } from "@/constant";
 
 interface TaskTableProps {
   tasks: Task[];
   onEdit: (task: Task) => void;
   onDelete: (id: string) => void;
   onToggleDone: (task: Task) => void;
+  onSort: (field: SortField) => void;
+  sortField: SortField | null;
+  sortOrder: "asc" | "desc";
 }
-
-const headers = [
-  "Выполнено",
-  "Заголовок",
-  "Статус",
-  "Приоритет",
-  "Дата",
-  "Действия",
-];
 
 export const TaskTable: FC<TaskTableProps> = ({
   tasks,
   onEdit,
   onToggleDone,
+  onSort,
 }) => (
   <ScrollArea className="w-full rounded-lg border border-gray-200 dark:border-gray-700">
-    <Table className="min-w-175 border-collapse border-gray-200 rounded-lg shadow-sm dark:border-gray-700">
-      <TableHeader className="bg-gray-100 dark:hover:bg-gray-300">
+    <Table className="min-w-175 border-collapse rounded-lg shadow-sm">
+      <TableHeader className="bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-500">
         <TableRow>
-          {headers.map((headers) => (
+          {headers.map((header) => (
             <TableHead
-              className="p-2 first:text-center last:text-center text:left font-medium text-gray-700"
-              key={headers}
+              key={header.label}
+              className={`p-2 first:text-center last:text-center text:left font-medium text-gray-700 ${header.key ? "cursor-pointer select-none" : ""}`}
+              onClick={() => header.key && onSort(header.key)}
             >
-              {headers}
+              {header.label}
             </TableHead>
           ))}
         </TableRow>
