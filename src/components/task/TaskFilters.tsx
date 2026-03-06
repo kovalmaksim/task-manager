@@ -22,16 +22,16 @@ export const TaskFilters = () => {
   } = useTaskFilters();
 
   return (
-    <div className="flex gap-4 justify-between">
+    <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
       <Input
         placeholder="Поиск по заголовку..."
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="max-w-xs"
+        className="w-full sm:max-w-xs"
       />
 
       <Select value={statusFilter} onValueChange={setStatusFilter}>
-        <SelectTrigger className="w-50">
+        <SelectTrigger className="w-full sm:w-40">
           <SelectValue placeholder="Статус" />
         </SelectTrigger>
 
@@ -45,7 +45,7 @@ export const TaskFilters = () => {
       </Select>
 
       <Select value={priorityFilter} onValueChange={setPriorityFilter}>
-        <SelectTrigger className="w-50">
+        <SelectTrigger className="w-full sm:w-40">
           <SelectValue placeholder="Приоритет" />
         </SelectTrigger>
 

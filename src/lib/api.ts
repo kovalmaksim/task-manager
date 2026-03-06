@@ -1,7 +1,6 @@
 import { Task } from "@/types/task";
 const BASE_URL = "http://localhost:3001/tasks";
 
-//TODO
 export const fetchTasks = async (): Promise<Task[]> => {
   const res = await fetch(BASE_URL);
 

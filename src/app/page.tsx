@@ -10,6 +10,10 @@ import { TaskTable } from "@/components/task/TaskTable";
 import { TaskFilters } from "@/components/task/TaskFilters";
 import { useTaskFilters } from "@/components/TaskProvider";
 import { TaskTableSkeleton } from "@/components/task/TaskTableSkeleton";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { TaskCounters } from "@/components/task/TaskCounters";
+import { useMedia } from "react-use";
+import { TaskCard } from "@/components/task/TasckCard";
 
 const HomePage = () => {
   const { data: tasks = [], isLoading, isError } = useTasks();
@@ -18,6 +22,8 @@ const HomePage = () => {
 
   const [dialogOpen, setDialogOpen] = useState(false);
   const [editTask, setEditTask] = useState<Task | null>(null);
+
+  const isMobile = useMedia("(max-width: 640px");
 
   const filteredTasks = useMemo(() => {
     if (!tasks) return [];
@@ -62,11 +68,13 @@ const HomePage = () => {
 
   return (
     <div className="p-8 max-w-350 mx-auto flex flex-col gap-6">
-      <div className="flex justify-evenly  items-center max-w-500">
+      <div className="flex flex-col gap-4 lg:flex-row lg:justify-evenly lg:items-center ">
+        <ThemeToggle />
         <h1 className="text-2xl">Список задач</h1>
         <TaskFilters />
         <Button
-          className="px-4 py-2 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200 cursor-pointer"
+          size="sm"
+          className="px-3 py-1.5 rounded-lg shadow-sm hover:shadow-lg transition-shadow duration-200 cursor-pointer"
           onClick={() => {
             setEditTask(null);
             setDialogOpen(true);
@@ -75,13 +83,29 @@ const HomePage = () => {
           Добавить задачу
         </Button>
       </div>
+      <TaskCounters tasks={tasks} />
 
-      <TaskTable
-        tasks={filteredTasks}
-        onEdit={handleEdit}
-        onDelete={handleDelete}
-        onToggleDone={handleToggleDone}
-      />
+      {isMobile ? (
+        <div className="flex flex-col gap-4">
+          {filteredTasks.map((task) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              onEdit={handleEdit}
+              onDelete={handleDelete}
+              onToggleDone={handleToggleDone}
+            />
+          ))}
+        </div>
+      ) : (
+        <TaskTable
+          tasks={filteredTasks}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+          onToggleDone={handleToggleDone}
+        />
+      )}
+
       <TaskDialog
         task={editTask}
         open={dialogOpen}
