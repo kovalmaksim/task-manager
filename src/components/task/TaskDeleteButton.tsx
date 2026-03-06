@@ -14,6 +14,7 @@ import {
   AlertDialogTrigger,
 } from "../ui/alert-dialog";
 import { useTaskMutations } from "@/hooks/useTasksMutations";
+import { Trash2 } from "lucide-react";
 
 interface TaskDeleteButtonProps {
   taskId: string;
@@ -30,12 +31,19 @@ export const TaskDeleteButton: FC<TaskDeleteButtonProps> = ({ taskId }) => {
 
   return (
     <AlertDialog open={open} onOpenChange={setOpen}>
-      <AlertDialogTrigger asChild>
-        <Button variant="destructive" size="sm">
-          Delete
-        </Button>
-      </AlertDialogTrigger>
+      <div className="flex gap-2">
+        <AlertDialogTrigger asChild>
+          <Button variant="destructive" size="sm" className="hidden sm:flex">
+            Delete
+          </Button>
+        </AlertDialogTrigger>
 
+        <AlertDialogTrigger asChild>
+          <Button variant="destructive" size="icon" className="sm:hidden">
+            <Trash2 size={16} />
+          </Button>
+        </AlertDialogTrigger>
+      </div>
       <AlertDialogContent>
         <AlertDialogHeader>
           <AlertDialogTitle>Удалить задачу?</AlertDialogTitle>

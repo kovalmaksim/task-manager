@@ -37,10 +37,10 @@ export const useTaskMutations = () => {
     },
 
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: queryKeys.tasks });
       toast.success("Задача создана");
     },
   });
-
   const update = useMutation({
     mutationFn: ({ id, data }: { id: string; data: Partial<Task> }) =>
       updateTask({ id, data }),
