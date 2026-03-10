@@ -31,5 +31,23 @@ cd <task-manager>
 2. Устанавливаем зависимости: 
    nmp install
 
+   # или
+
+   yarn
+
 3. Запускаем локально: 
    npm run dev
+
+   # или
+
+   yarn dev
+
+4. Открываем барузер:
+   http://localhost:3000
+
+   ## Структура проекта
+
+   /components # UI компоненты (TaskTable, TaskForm, фильры и др.)
+   /hooks # Кастомные хуки (useTasks, useTasksMutations)
+   /types # Типы TypeScript
+   /lib # Вспомогательные функции

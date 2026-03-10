@@ -1,14 +1,6 @@
 {
   "tasks": [
     {
-      "title": "Task 2",
-      "description": "badges, optimistic update",
-      "priority": "high",
-      "status": "in_progress",
-      "createdAt": "2026-03-04T12:55:56.624Z",
-      "id": "h5nMbNp"
-    },
-    {
       "title": "визуал",
       "description": "добавить адаптив\n",
       "priority": "high",
@@ -39,6 +31,14 @@
       "status": "done",
       "createdAt": "2026-03-06T10:05:30.529Z",
       "id": "uEHtCWs"
+    },
+    {
+      "title": "2323232",
+      "description": "",
+      "priority": "medium",
+      "status": "todo",
+      "createdAt": "2026-03-10T07:29:14.294Z",
+      "id": "ueW-0a_"
     }
   ]
 }

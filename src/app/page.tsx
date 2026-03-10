@@ -124,6 +124,13 @@ const HomePage = () => {
 
   const SortIcon = sortOrder === "asc" ? ArrowUp : ArrowDown;
 
+  const isSortableHeader = (header: {
+    label: string;
+    key: SortField | null;
+  }): header is { label: string; key: SortField } => header.key !== null;
+
+  const sortableHeaders = headers.filter(isSortableHeader);
+
   return (
     <div className="p-8 max-w-350 mx-auto flex flex-col gap-6">
       <div className="flex flex-col gap-4 lg:flex-row lg:justify-evenly lg:items-center">
@@ -161,21 +168,18 @@ const HomePage = () => {
                 </Button>
               </DropdownMenuTrigger>
               <DropdownMenuContent>
-                {headers
-                  //TODO
-                  .filter((h) => h.key)
-                  .map((header) => (
-                    <DropdownMenuItem
-                      key={header.key}
-                      onClick={() => handleSort(header.key as SortField)}
-                      className="flex items-center justify-between"
-                    >
-                      {header.label}
-                      {sortField === header.key && (
-                        <Check className="ml-2 w-4 h-4" />
-                      )}
-                    </DropdownMenuItem>
-                  ))}
+                {sortableHeaders.map((header) => (
+                  <DropdownMenuItem
+                    key={header.key}
+                    onClick={() => handleSort(header.key)}
+                    className="flex items-center justify-between"
+                  >
+                    {header.label}
+                    {sortField === header.key && (
+                      <Check className="ml-2 w-4 h-4" />
+                    )}
+                  </DropdownMenuItem>
+                ))}
               </DropdownMenuContent>
             </DropdownMenu>
 
