@@ -35,3 +35,18 @@ export const priorityOptions = [
     label: "High",
   },
 ];
+
+export type SortField = "title" | "status" | "priority" | "createdAt";
+export type SortOrder = "asc" | "desc";
+
+export const headers: {
+  label: string;
+  key: SortField | null;
+}[] = [
+  { label: "Выполнено", key: null },
+  { label: "Заголовок", key: "title" },
+  { label: "Статус", key: "status" },
+  { label: "Приоритет", key: "priority" },
+  { label: "Дата", key: "createdAt" },
+  { label: "Действия", key: null },
+];
